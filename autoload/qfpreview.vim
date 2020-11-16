@@ -24,18 +24,34 @@ const s:defaults = {
         \ 'offset': 0,
         \ 'sign': {},
         \ 'matchcolumn': v:false,
-        \ 'scrollup': "\<c-k>",
-        \ 'scrolldown': "\<c-j>",
-        \ 'halfpageup': '',
-        \ 'halfpagedown': '',
-        \ 'fullpageup': '',
-        \ 'fullpagedown': '',
+        \ 'scrollup' : "\<c-k>",
+        \ 'scrollup2': '',
+        \ 'scrollup3': '',
+        \ 'scrolldown' : "\<c-j>",
+        \ 'scrolldown2': '',
+        \ 'scrolldown3': '',
+        \ 'halfpageup' : '',
+        \ 'halfpageup2': '',
+        \ 'halfpageup3': '',
+        \ 'halfpagedown' : '',
+        \ 'halfpagedown2': '',
+        \ 'halfpagedown3': '',
+        \ 'fullpageup' : '',
+        \ 'fullpageup2': '',
+        \ 'fullpageup3': '',
+        \ 'fullpagedown' : '',
+        \ 'fullpagedown2': '',
+        \ 'fullpagedown3': '',
         \ 'top': "\<s-home>",
         \ 'bottom': "\<s-end>",
         \ 'reset': 'r',
-        \ 'close': 'q',
+        \ 'close' : 'q',
+        \ 'close2': '\<c-q>',
+        \ 'close3': '',
         \ 'next': '',
+        \ 'next2': '',
         \ 'previous': ''
+        \ 'previous2': ''
         \ }
 
 const s:get = {x -> get(b:, 'qfpreview', get(g:, 'qfpreview', {}))->get(x, s:defaults[x])}
@@ -83,18 +99,34 @@ endfunction
 
 function s:popup_filter(line, winid, key) abort
     let mappings = {}
-    let mappings[s:get('close')]        = {id -> popup_close(id)}
-    let mappings[s:get('top')]          = {id -> win_execute(id, 'normal! gg')}
-    let mappings[s:get('bottom')]       = {id -> win_execute(id, 'normal! G')}
-    let mappings[s:get('scrollup')]     = {id -> win_execute(id, "normal! \<c-y>")}
-    let mappings[s:get('scrolldown')]   = {id -> win_execute(id, "normal! \<c-e>")}
-    let mappings[s:get('halfpageup')]   = {id -> win_execute(id, "normal! \<c-u>")}
-    let mappings[s:get('halfpagedown')] = {id -> win_execute(id, "normal! \<c-d>")}
-    let mappings[s:get('fullpageup')]   = {id -> win_execute(id, "normal! \<c-b>")}
-    let mappings[s:get('fullpagedown')] = {id -> win_execute(id, "normal! \<c-f>")}
-    let mappings[s:get('reset')]        = {id -> s:reset(id, a:line)}
-    let mappings[s:get('next')]         = {id -> s:cycle(id,  1)}
-    let mappings[s:get('previous')]     = {id -> s:cycle(id, -1)}
+    let mappings[s:get('close')]         = {id -> popup_close(id)}
+    let mappings[s:get('close2')]        = {id -> popup_close(id)}
+    let mappings[s:get('close3')]        = {id -> popup_close(id)}
+    let mappings[s:get('top')]           = {id -> win_execute(id, 'normal! gg')}
+    let mappings[s:get('bottom')]        = {id -> win_execute(id, 'normal! G')}
+    let mappings[s:get('scrollup')]      = {id -> win_execute(id, "normal! \<c-y>")}
+    let mappings[s:get('scrollup2')]     = {id -> win_execute(id, "normal! \<c-y>")}
+    let mappings[s:get('scrollup3')]     = {id -> win_execute(id, "normal! \<c-y>")}
+    let mappings[s:get('scrolldown')]    = {id -> win_execute(id, "normal! \<c-e>")}
+    let mappings[s:get('scrolldown2')]   = {id -> win_execute(id, "normal! \<c-e>")}
+    let mappings[s:get('scrolldown3')]   = {id -> win_execute(id, "normal! \<c-e>")}
+    let mappings[s:get('halfpageup')]    = {id -> win_execute(id, "normal! \<c-u>")}
+    let mappings[s:get('halfpageup2')]   = {id -> win_execute(id, "normal! \<c-u>")}
+    let mappings[s:get('halfpageup3')]   = {id -> win_execute(id, "normal! \<c-u>")}
+    let mappings[s:get('halfpagedown')]  = {id -> win_execute(id, "normal! \<c-d>")}
+    let mappings[s:get('halfpagedown2')] = {id -> win_execute(id, "normal! \<c-d>")}
+    let mappings[s:get('halfpagedown3')] = {id -> win_execute(id, "normal! \<c-d>")}
+    let mappings[s:get('fullpageup')]    = {id -> win_execute(id, "normal! \<c-b>")}
+    let mappings[s:get('fullpageup2')]   = {id -> win_execute(id, "normal! \<c-b>")}
+    let mappings[s:get('fullpageup3')]   = {id -> win_execute(id, "normal! \<c-b>")}
+    let mappings[s:get('fullpagedown')]  = {id -> win_execute(id, "normal! \<c-f>")}
+    let mappings[s:get('fullpagedown2')] = {id -> win_execute(id, "normal! \<c-f>")}
+    let mappings[s:get('fullpagedown3')] = {id -> win_execute(id, "normal! \<c-f>")}
+    let mappings[s:get('reset')]         = {id -> s:reset(id, a:line)}
+    let mappings[s:get('next')]          = {id -> s:cycle(id,  1)}
+    let mappings[s:get('next2')]         = {id -> s:cycle(id,  1)}
+    let mappings[s:get('previous')]      = {id -> s:cycle(id, -1)}
+    let mappings[s:get('previous2')]     = {id -> s:cycle(id, -1)}
     call filter(mappings, '!empty(v:key)')
 
     if has_key(mappings, a:key)
