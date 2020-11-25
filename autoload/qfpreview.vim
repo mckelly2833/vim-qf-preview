@@ -50,7 +50,7 @@ const s:defaults = {
         \ 'close3': '',
         \ 'next': '',
         \ 'next2': '',
-        \ 'previous': ''
+        \ 'previous': '',
         \ 'previous2': ''
         \ }
 
