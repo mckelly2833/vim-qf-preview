@@ -134,7 +134,9 @@ function s:popup_filter(line, winid, key) abort
         return v:true
     endif
 
-    return v:false
+    " return true so that other keys do not close preview window ...
+    "return v:false
+    return v:true
 endfunction
 
 function s:popup_cb(winid, result) abort
