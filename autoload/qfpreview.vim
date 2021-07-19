@@ -3,7 +3,7 @@
 " File:         autoload/qfpreview.vim
 " Author:       bfrg <https://github.com/bfrg>
 " Website:      https://github.com/bfrg/vim-qf-preview
-" Last Change:  Aug 19, 2020
+" Last Change:  Jul 18, 2021
 " License:      Same as Vim itself (see :h license)
 " ==============================================================================
 
@@ -134,7 +134,7 @@ function s:popup_filter(line, winid, key) abort
         return v:true
     endif
 
-    " return true so that other keys do not close preview window ...
+    " mck - return true so that other keys do not close preview window ...
     "return v:false
     return v:true
 endfunction
@@ -160,7 +160,7 @@ function qfpreview#open(idx) abort
     endif
 
     const qfitem = s:qflist[a:idx]
-    if !qfitem.valid || !qfitem.bufnr
+    if !qfitem.valid || qfitem.bufnr < 1 || !bufexists(qfitem.bufnr)
         let s:qflist = []
         return
     endif
@@ -263,7 +263,7 @@ function qfpreview#open(idx) abort
     if s:get('matchcolumn') && qfitem.lnum > 0 && qfitem.col > 0
         const max = getbufline(qfitem.bufnr, qfitem.lnum)[0]->len()
         const col = qfitem.col >= max ? max : qfitem.col
-        call matchaddpos('QfPreviewColumn', [[qfitem.lnum, col]], 1, -1, {'window': s:winid})
+        call matchadd('QfPreviewColumn', printf('\%%%dl\%%%dc', qfitem.lnum, col), 1, -1, {'window': s:winid})
     endif
     return s:winid
 endfunction
